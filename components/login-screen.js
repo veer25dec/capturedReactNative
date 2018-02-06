@@ -1,13 +1,15 @@
 import React , { Component } from 'react';
-import { AppRegistry,StyleSheet, TextInput,Text, View ,KeyboardAvoidingView,Button,TouchableOpacity} from 'react-native';
+import { AppRegistry,StyleSheet, TextInput,Text, View ,KeyboardAvoidingView,Button,TouchableOpacity,ActivityIndicator,StackNavigator} from 'react-native';
 import FloatingTextInput from './floating-text-input';
 import ApiUtils from '../util/api-utils'
 
 type Props = {
   error : boolean,
   isLoading : boolean,
+  isLoggedIn : boolean,
   appLoginResponse : Object,
   loginUser : Function,
+  navigation:StackNavigator,
 }
 
 const getErrorMessage = () => (
@@ -15,25 +17,35 @@ const getErrorMessage = () => (
     An Error occured when fetching data
   </Text>
 );
+const getSuccessMessage = () => (
+  <Text style={styles.errorText}>
+    You are loggedin
+  </Text>
+);
+
+const onLogin = () => {
+    navigation.navigate('Home');
+    // navigate('Home', {title : 'Second Screen'});
+};
 
 export default LoginScreen  = (props : Props) =>  {
 
   const {
     isLoading,
     error,
+    isLoggedIn,
     loginUser,
     appLoginResponse,
+    navigation,
   } = props;
 
-  console.log('proprs are here ++++++ ' , props.dispatch)
+  console.log('proprs are here ++++++ ' , navigation)
    return (
 
      <View style={{
         flex: 1
       }}>
       <View style={styles.container}>
-        {isLoading ? <ActivityIndicator /> : null}
-        {error ? getErrorMessage() : null}
         <View style={{
            flex: 1,
            flexDirection: 'column',
@@ -63,12 +75,13 @@ export default LoginScreen  = (props : Props) =>  {
           style={styles.button}
           onPress={loginUser}
         >
-          <Text> Sign In </Text>
+        {isLoading ? <ActivityIndicator /> : <Text> Sign In </Text>}
         </TouchableOpacity>
+        {error ? getErrorMessage() : null}
+        {isLoggedIn? getSuccessMessage()  : null}
         </View>
         </View>
       </View>
-
      </View>
    );
 }

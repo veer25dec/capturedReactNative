@@ -9,8 +9,8 @@ import {
 
 const initialState = {
   appLoginSuccessResult: {},
-  isLoading: true,
-  error: true,
+  isLoading: false,
+  error: false,
   isLoggedIn:false,
   email:{},
   password:{},

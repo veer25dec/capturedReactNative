@@ -13,7 +13,7 @@ export const appLoginUser = () => (
       'id': 'veer25mangat@gmail.com',
       'auth': 'Anna1234',
     }),
-  }).then(console.log('this has to be called')).then((res) => res.json())
+  }).then((res) => res.json())
     .then((data) => data)
     .catch((err) => err)
 );

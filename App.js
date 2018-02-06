@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Text } from "react-native";
 import { Provider, connect } from "react-redux";
 import { StackNavigator, addNavigationHelpers } from "react-navigation";
+import AppLoginContainer from './containers/app-login-container';
 
 import Routes from "./util/routes";
 

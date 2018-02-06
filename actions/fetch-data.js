@@ -6,7 +6,6 @@ import {fetchDataSuccess} from './fetch-data-success';
 
 export const loginUser = () => (
   (dispatch : Function) => {
-    alert('asdasdasdasdasdasdasdasdasdasdas')
     dispatch(fetchDataRequest());
     return appLoginUser()
       .then((appLoginSuccessResult) => dispatch(fetchDataSuccess(appLoginSuccessResult)))
