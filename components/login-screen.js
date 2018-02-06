@@ -1,5 +1,5 @@
 import React , { Component } from 'react';
-import { AppRegistry,StyleSheet, TextInput,Text, View ,KeyboardAvoidingView,Button,TouchableOpacity,ActivityIndicator,StackNavigator} from 'react-native';
+import { AppRegistry,StyleSheet, TextInput,Text, View ,KeyboardAvoidingView,Button,TouchableOpacity,ActivityIndicator} from 'react-native';
 import FloatingTextInput from './floating-text-input';
 import ApiUtils from '../util/api-utils'
 
@@ -9,7 +9,6 @@ type Props = {
   isLoggedIn : boolean,
   appLoginResponse : Object,
   loginUser : Function,
-  navigation:StackNavigator,
 }
 
 const getErrorMessage = () => (
@@ -36,10 +35,9 @@ export default LoginScreen  = (props : Props) =>  {
     isLoggedIn,
     loginUser,
     appLoginResponse,
-    navigation,
   } = props;
 
-  console.log('proprs are here ++++++ ' , navigation)
+  console.log('proprs are here ++++++ ' , props.loginUser)
    return (
 
      <View style={{

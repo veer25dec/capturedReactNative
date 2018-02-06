@@ -34,8 +34,9 @@ class AppWithNavigationState extends Component {
 const store = getStore(navReducer);
 
 const app = () => (
+  //get the navigation working here.
   <Provider store={store}>
-    <AppWithNavigationState />
+    <AppLoginContainer />
   </Provider>
 );
 
