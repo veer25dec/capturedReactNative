@@ -13,8 +13,8 @@ export const appLoginUser = () => (
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      'id': 'veer25mangat@gmail.com',
-      'auth': 'Anna1234',
+      'id': '',
+      'auth': '',
     }),
   }).then(response => {
       console.log("response is ", response)

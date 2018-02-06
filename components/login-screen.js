@@ -56,7 +56,6 @@ export default LoginScreen  = (props : Props) =>  {
             style={{flex:0.8, height:40}}
             textAlign={'center'}
             placeholder = 'Email'
-            value = 'veer25mangat@gmail.com'
            // onChangeText={(text) => this.setState({emailText:text})}
          />
          </View>
@@ -65,7 +64,6 @@ export default LoginScreen  = (props : Props) =>  {
              style={{flex:0.8, height:40}}
              textAlign={'center'}
              placeholder = 'Password'
-             value = 'Anna1234'
              secureTextEntry = {true}
             // onChangeText={(text) => this.setState({passwordText:text})}
           />
