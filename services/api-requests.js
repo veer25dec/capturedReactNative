@@ -1,6 +1,9 @@
 // @flow
 
 import config from '../util/config';
+import ApiUtils from '../util/api-utils'
+import {fetchDataError} from '../actions/fetch-data-error';
+
 // how can i get this data from redux????
 export const appLoginUser = () => (
   fetch(config.API_BASE_URL + config.API_APP_LOGIN, {
@@ -13,7 +16,20 @@ export const appLoginUser = () => (
       'id': 'veer25mangat@gmail.com',
       'auth': 'Anna1234',
     }),
-  }).then((res) => res.json())
-    .then((data) => data)
+  }).then(response => {
+      console.log("response is ", response)
+        if (response.status >= 400) {
+          fetchDataError();
+        }
+        return response.json();
+      })
+    .then((json) => {
+      if(!json.success){
+        console.log("response is + this should have been called");
+        // dispatch(fetchDataError());
+      }else{
+        return (data) => data;
+      }
+  })
     .catch((err) => err)
 );
