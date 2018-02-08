@@ -1,10 +1,9 @@
-// @flow
 
 import config from '../util/config';
 import ApiUtils from '../util/api-utils'
 
 // how can i get this data from redux????
-export const loginUser = ({ email, password }) => (
+export default loginUser = ({ email, password }) => (
   fetch(config.API_BASE_URL + config.API_APP_LOGIN, {
     method: 'POST',
     headers: {

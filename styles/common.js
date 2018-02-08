@@ -1,4 +1,3 @@
-// @flow
 
 import { StyleSheet } from “react-native”;
 import { primaryColor } from “../styles/common.js”;

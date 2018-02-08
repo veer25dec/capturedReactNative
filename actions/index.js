@@ -1,5 +1,3 @@
-// @flow
-
 import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
@@ -10,7 +8,7 @@ import {
 
 import ApiLoginUser from '../services/ApiLoginUser'
 
-export const emailChanged = (text) => {
+export const emailChanged = ( text ) => {
   return {
     type: EMAIL_CHANGED,
     payload: text

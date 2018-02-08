@@ -1,5 +1,3 @@
-// @flow
-
 
 var ApiUtils = {
   checkStatus: function(response) {

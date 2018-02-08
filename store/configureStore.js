@@ -1,4 +1,3 @@
-// @flow
 
 // Redux Store Configuration
 import {createStore, applyMiddleware} from 'redux';
