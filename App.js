@@ -1,43 +1,20 @@
-import React, { Component } from "react";
-import { Text } from "react-native";
-import { Provider, connect } from "react-redux";
-import { StackNavigator, addNavigationHelpers } from "react-navigation";
-import AppLoginContainer from './containers/app-login-container';
+import React , { Component } from 'react';
+import { View, Text } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore , applyMiddleware} from 'redux';
+import LoginScreen from './components/LoginScreen'
+import reducers from './reducers';
+import ReduxThunk from 'redux-thunk';
 
-import Routes from "./util/routes";
-
-import getStore from "./store/configureStore";
-
-const AppNavigator = StackNavigator(Routes);
-
-const navReducer = (state, action) => {
-    const newState = AppNavigator.router.getStateForAction(action, state);
-    return newState || state;
-};
-
-@connect(state => ({
-    nav: state.nav
-}))
-class AppWithNavigationState extends Component {
-    render() {
-        return (
-            <AppNavigator
-                navigation={addNavigationHelpers({
-                    dispatch: this.props.dispatch,
-                    state: this.props.nav
-                })}
-            />
-        );
-    }
+class App extends Component {
+  render() {
+    const store = createStore(reducers, {}, applyMiddleware(ReduxThunk));
+    return (
+      <Provider store={store}>
+        <LoginScreen />
+      </Provider>
+    )
+  }
 }
 
-const store = getStore(navReducer);
-
-const app = () => (
-  //get the navigation working here.
-  <Provider store={store}>
-    <AppLoginContainer />
-  </Provider>
-);
-
-export default app;
+export default App;

@@ -2,10 +2,9 @@
 
 import config from '../util/config';
 import ApiUtils from '../util/api-utils'
-import {fetchDataError} from '../actions/fetch-data-error';
 
 // how can i get this data from redux????
-export const appLoginUser = () => (
+export const loginUser = ({ email, password }) => (
   fetch(config.API_BASE_URL + config.API_APP_LOGIN, {
     method: 'POST',
     headers: {
@@ -13,8 +12,8 @@ export const appLoginUser = () => (
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      'id': '',
-      'auth': '',
+      'id': email,
+      'auth': password,
     }),
   }).then(response => {
       console.log("response is ", response)
