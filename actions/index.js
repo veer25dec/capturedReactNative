@@ -6,7 +6,8 @@ import {
   LOGIN_USER
 } from './types'
 
-import ApiLoginUser from '../services/ApiLoginUser'
+import { appLoginUser } from '../services/ApiLoginUser'
+import config from '../util/config';
 
 export const emailChanged = ( text ) => {
   return {
@@ -23,10 +24,23 @@ export const passwordChanged = (text) => {
 };
 
 export const loginUser = ({ email, password }) => {
+  // TODO : extract API calls out to a seperate class
   return (dispatch) => {
-    dispatc({ type: LOGIN_USER});
-    loginUser(email,password).then(data => loginUserSuccess(dispatch,data))
-    .catch( (error) => loginUserFailed(dispatch,error));
+    console.log('email is ' ,email)
+    dispatch({ type: LOGIN_USER});
+    fetch(config.API_BASE_URL + config.API_APP_LOGIN, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        'id': email,
+        'auth': password,
+        }),
+      })
+      .then(data => loginUserSuccess(dispatch,data))
+      .catch( (error) => loginUserFailed(dispatch,error));
   };
 };
 
