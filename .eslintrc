@@ -1,6 +1,0 @@
-{
-  "extends": "rallycoding"
-  "rules": {
-      "arror-body-style": 0
-  }
-}

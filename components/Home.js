@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -17,7 +19,7 @@ const styles = StyleSheet.create({
 
 const SecondScreen = () => ({
   return (
-    <View style={ styles.container }>
+    <View style={styles.container}>
       <Text style={styles.welcome}>
         THIS IS THE SECOND SCREEN!
       </Text>

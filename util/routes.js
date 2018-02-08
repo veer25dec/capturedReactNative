@@ -1,3 +1,5 @@
+// @flow
+
 import React , { Component } from 'react';
 import LoginScreen from "../components/login-screen";
 import Home from "../components/Home";
