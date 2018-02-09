@@ -2,8 +2,12 @@
 
 import {combineReducers} from 'redux';
 import UserReducer from './UserReducer';
+import GroupsReducer from './GroupsReducer';
 
-export default combineReducers({
-        // nav: NavReducer,
-        auth: UserReducer
-  });
+export default function getRootReducer(navReducer) {
+      return combineReducers({
+          nav: navReducer,
+          auth: UserReducer,
+          groups: GroupsReducer
+      });
+}

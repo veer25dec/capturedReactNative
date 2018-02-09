@@ -28,6 +28,7 @@ const styles = {
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'center',
+		backgroundColor : 'white'
 	},
 	containerStyleWithoutBorder: {
 		elevation: 1,
@@ -38,6 +39,7 @@ const styles = {
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'center',
+		backgroundColor : 'white'
 	}
 };
 

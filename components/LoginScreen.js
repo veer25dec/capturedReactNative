@@ -3,11 +3,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text} from 'react-native';
 import { Card, CardSection, Input, Button, Spinner} from './common';
-import { emailChanged, passwordChanged , loginUser} from '../actions'
+import { emailChanged, passwordChanged , loginUser} from '../actions/AuthActions'
 
 class LoginScreen extends Component {
 
-  // state = { email: '', password: '', error: '', isLoading: false };
+  static navigationOptions = {
+      title: null,
+      header: false
+  };
 
   onEmailChanged(text){
       this.props.emailChanged(text);
@@ -18,15 +21,16 @@ class LoginScreen extends Component {
   }
 
   onLoginButtonPress(){
+    const navigate = this.props.navigation.navigate;
     const { email, password} = this.props;
-    this.props.loginUser({email, password});
+    this.props.loginUser({email, password, navigate});
   }
 
   renderError(){
     if(this.props.error){
       return (
-        <View styles={{ backGroundColor: 'white' }}>
-          <Text styles={styles.errorTextStyle}>
+        <View style={{ backgroundColor: 'white' }}>
+          <Text style={styles.errorTextStyle}>
             {this.props.error}
           </Text>
         </View>
@@ -76,7 +80,7 @@ class LoginScreen extends Component {
 const styles = {
   errorTextStyle: {
     fontSize: 20,
-    alighSelf: 'center',
+    alignSelf: 'center',
     color: 'red'
   }
 }
