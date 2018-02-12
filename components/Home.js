@@ -1,35 +1,47 @@
 import React, { Component } from 'react';
 import { View, Text, ListView} from 'react-native';
 import { Card, CardSection, Input, Button, Spinner} from './common';
-import { fetchGroups} from '../actions/GroupsActions'
+import { fetchGroups } from '../actions/GroupsActions'
 import { connect } from 'react-redux';
 import CardListItem from './CardListItem';
 
 class Home extends Component {
 
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows(props.teams),
+    };
+  }
+
+  componentWillReceiveProps(newProps) {
+    let teams = newProps.teams;
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(teams)
+    });
+  }
+
   static navigationOptions = {
       title: "Home"
   };
 
-  setUpListView(){
-    const ds = new ListView.DataSource({
-        rowHasChanged: (r1, r2) => r1 !== r2
-      });
-    this.dataSource = ds.cloneWithRows(this.props.teams);
-  }
-
   componentWillMount() {
-    this.setUpListView();
+  	// const ds = new ListView.DataSource({
+  	// 	rowHasChanged: (r1, r2) => r1 !== r2
+  	// });
+  	// this.dataSource = ds.cloneWithRows(this.props.teams);
     this.props.fetchGroups();
   }
 
   renderRow(group) {
+    console.log('renderRow was called')
 		return <CardListItem group={group} />;
 	}
 
 
   renderUI(){
-    // console.log('Teams are +++++++' , this.props.teams)
+   console.log('Datasource are +++++++' , this.state.dataSource)
 
     if(this.props.error){
       return (
@@ -44,7 +56,7 @@ class Home extends Component {
     }else if(this.props.teams){
       return (
           <ListView
-              dataSource={this.dataSource}
+              dataSource={this.state.dataSource}
               renderRow={this.renderRow}
           />
       )
@@ -64,13 +76,9 @@ class Home extends Component {
     console.log('Teams are +++++++' , this.props.teams)
 
     return(
-      // <Card withBorder={false}>
-      //   {this.renderUI()}
-      // </Card>
-      <ListView
-          dataSource={this.dataSource}
-          renderRow={this.renderRow}
-      />
+      <Card withBorder={false}>
+        {this.renderUI()}
+      </Card>
     );
   }
 }
@@ -85,7 +93,6 @@ const styles = {
 
 const mapStateToProps = ({ groups }) => {
   const { teams, error, isLoading} = groups;
-
   return { teams, error, isLoading};
 };
 
