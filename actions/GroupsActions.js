@@ -10,7 +10,7 @@ export const fetchGroups = () => {
   // TODO : extract API calls out to a seperate class
   return (dispatch) => {
     dispatch({ type: FETCH_GROUPS});
-    fetch(config.API_BASE_URL + config.API_GROUPS + '?limit=18&offset=0', {
+    fetch(config.API_BASE_URL + config.API_GROUPS + '?limit=18&offset=0&order_by=[{"field":"viewed", "direction": "desc"}]', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -27,7 +27,7 @@ const handleGroupsResponse = (dispatch, data) => {
   if(data.teams){
     dispatch({
       type : FETCH_GROUPS_SUCCESS,
-      payload: data.teams
+      payload: data
     });
   }else{
     fetchGroupsFailed(dispatch,'Something went wrong')

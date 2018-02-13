@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, ListView} from 'react-native';
-import { Card, CardSection, Input, Button, Spinner, Header} from './common';
+import { View, Text, ListView, RefreshControl} from 'react-native';
+import { Card, CardSection, Input, Button, Spinner, Header, BackgroundView} from './common';
 import { fetchGroups } from '../actions/GroupsActions'
 import { connect } from 'react-redux';
 import CardListItem from './CardListItem';
@@ -17,13 +17,23 @@ class Home extends Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: ds.cloneWithRows(props.teams),
+      refreshing: false,
     };
+  }
+
+  _onRefresh() {
+    this.setState({refreshing: true});
+    this.props.fetchGroups() // TODO: should try to change the state with a promise.
+    //.then(() => {
+      //this.setState({refreshing: false});
+    //});;
   }
 
   componentWillReceiveProps(newProps) {
     let teams = newProps.teams;
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(teams)
+      dataSource: this.state.dataSource.cloneWithRows(teams),
+      refreshing: false
     });
   }
 
@@ -32,7 +42,6 @@ class Home extends Component {
   }
 
   renderRow(group) {
-    console.log('renderRow was called')
 		return <CardListItem group={group} />;
 	}
 
@@ -51,10 +60,19 @@ class Home extends Component {
       return <Spinner size='large'/>
     }else if(this.props.teams){
       return (
-          <ListView
-              dataSource={this.state.dataSource}
-              renderRow={this.renderRow}
-          />
+        <View style={{ backgroundColor:'white', flex: 1}}>
+        <Text style={{ paddingTop: 20, paddingBottom: 20, paddingLeft: 10, fontSize : 24}}>{this.props.num_teams + ' groups'}</Text>
+        <ListView
+            refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._onRefresh.bind(this)}
+                  />
+                }
+            dataSource={this.state.dataSource}
+            renderRow={this.renderRow}
+        />
+        </View>
       )
     }else{
       return (
@@ -69,7 +87,6 @@ class Home extends Component {
 
 
   render(){
-
     return(
       <View style={{ flex: 1 ,
                     backgroundColor : 'white'
@@ -92,8 +109,8 @@ const styles = {
 }
 
 const mapStateToProps = ({ groups }) => {
-  const { teams, error, isLoading} = groups;
-  return { teams, error, isLoading};
+  const { num_teams, teams, error, isLoading} = groups;
+  return { num_teams, teams, error, isLoading};
 };
 
 export default connect(mapStateToProps, { fetchGroups } )(Home);
