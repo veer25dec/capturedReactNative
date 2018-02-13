@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { View, Text, ListView} from 'react-native';
-import { Card, CardSection, Input, Button, Spinner} from './common';
+import { Card, CardSection, Input, Button, Spinner, Header} from './common';
 import { fetchGroups } from '../actions/GroupsActions'
 import { connect } from 'react-redux';
 import CardListItem from './CardListItem';
 
 class Home extends Component {
+
+  static navigationOptions = {
+      title: null,
+      header: false
+  };
 
   constructor(props) {
     super(props);
@@ -22,15 +27,7 @@ class Home extends Component {
     });
   }
 
-  static navigationOptions = {
-      title: "Home"
-  };
-
   componentWillMount() {
-  	// const ds = new ListView.DataSource({
-  	// 	rowHasChanged: (r1, r2) => r1 !== r2
-  	// });
-  	// this.dataSource = ds.cloneWithRows(this.props.teams);
     this.props.fetchGroups();
   }
 
@@ -41,7 +38,6 @@ class Home extends Component {
 
 
   renderUI(){
-   console.log('Datasource are +++++++' , this.state.dataSource)
 
     if(this.props.error){
       return (
@@ -73,12 +69,16 @@ class Home extends Component {
 
 
   render(){
-    console.log('Teams are +++++++' , this.props.teams)
 
     return(
-      <Card withBorder={false}>
-        {this.renderUI()}
-      </Card>
+      <View style={{ flex: 1 ,
+                    backgroundColor : 'white'
+                  }}>
+        <Header headerText={'Hive Learning'} />
+        <View style={{ flex: 1 }}>
+          {this.renderUI()}
+        </View>
+      </View>
     );
   }
 }

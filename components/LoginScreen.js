@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text} from 'react-native';
-import { Card, CardSection, Input, Button, Spinner} from './common';
+import { Card, CardSection, Input, Button, Spinner, BackgroundView} from './common';
 import { emailChanged, passwordChanged , loginUser} from '../actions/AuthActions'
 
 class LoginScreen extends Component {
@@ -51,7 +51,7 @@ class LoginScreen extends Component {
 
   render(){
     return(
-      <Card withBorder={false}>
+      <BackgroundView>
         <Text style={{ paddingTop: 100, paddingBottom: 50, fontSize : 32}}>Sign In</Text>
         <CardSection withBorder={false}>
           <Input
@@ -72,7 +72,7 @@ class LoginScreen extends Component {
         <CardSection withBorder={false}>
           {this.renderButton()}
         </CardSection>
-      </Card>
+      </BackgroundView>
     )
   }
 }

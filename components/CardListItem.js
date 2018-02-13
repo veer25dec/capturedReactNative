@@ -22,7 +22,7 @@ class CardListItem extends Component {
 	render() {
 		const { titleStyle, textStyle } = styles;
 		const { id, username , hero , num_users_all} = this.props.group;
-		let image_uri = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+hero;
+		let image_uri = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ hero;
 		console.log('image_uri is ++++ ', image_uri)
 		return (
 				<Card withBorder= {true}>
@@ -56,10 +56,5 @@ const styles = StyleSheet.create({
 		fontFamily: 'Helvetica',
 	}
 });
-
-// const mapStateToProps = (state, ownProps) => {
-// 	const expanded = state.selectedLibraryId === ownProps.library.id;
-// 	return { expanded };
-// };
 
 export default CardListItem;
