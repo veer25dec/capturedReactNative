@@ -10,7 +10,7 @@ import {
 import { CardSection, Card } from './common';
 import config from '../util/config';
 
-class CardListItem extends Component {
+class GroupsListItem extends Component {
 
 	componentWillUpdate() {
 		LayoutAnimation.spring();
@@ -53,4 +53,12 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default CardListItem;
+// const mapStateToProps = ({ groups }) => {
+//   const { num_teams, teams, error, isLoading} = groups;
+//   return { num_teams, teams, error, isLoading};
+// };
+//
+// export default connect(mapStateToProps, { fetchGroups } )(GroupsListItem);
+
+
+export default GroupsListItem;

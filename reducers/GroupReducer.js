@@ -20,13 +20,13 @@ export default (state = INITIAL_STATE, action) => {
       case FETCH_GROUP:
         return { ...state, isLoading : true, error: ''};
       case FETCH_GROUP_SUCCESS:
-        return { ...state };
+        return { ...state , group : action.payload };
       case FETCH_GROUP_FAILED:
           return { ...state, isLoading : false, error : action.payload};
       case FETCH_RESOURCES:
-          return { ...state, isLoading : true, error: ''};
-      case FETCH_RESOURCES_SUCCESS:
           return { ...state };
+      case FETCH_RESOURCES_SUCCESS:
+      return { ...state , resources : action.payload , isLoading : false, error : ''};
       case FETCH_RESOURCES_FAILED:
           return { ...state, isLoading : false, error : action.payload};
       default:

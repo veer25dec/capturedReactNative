@@ -3,7 +3,10 @@ import {
   PASSWORD_CHANGED,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILED,
-  LOGIN_USER
+  LOGIN_USER,
+  APP_LAUNCH,
+  APP_LAUNCH_SUCCESS,
+  APP_LAUNCH_FAILED
 } from './types'
 
 import config from '../util/config';
@@ -51,7 +54,7 @@ const handleLoginResponse = (dispatch, data,navigate) => {
     });
     navigate("Home", {title: 'Home'});
   }else{
-    loginUserFailed(dispatch,'Something went wrong')
+    loginUserFailed(dispatch,data.error)
   }
 };
 const loginUserFailed = (dispatch, error) => {
@@ -60,3 +63,46 @@ const loginUserFailed = (dispatch, error) => {
     payload: error
   });
 };
+
+export const appLaunch = () => {
+  return (dispatch) => {
+    dispatch({ type: APP_LAUNCH});
+    fetch(config.API_BASE_URL + config.API_APP_LAUNCH, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "v_major": 0,
+        "v_minor": 77,
+        "v_patch": 0,
+        "device_type": 1, // An integer corresponding to the device type [UNKNOWN, APPLE, ANDROID]
+        "device_model": "react native expo",
+        "app": "Hive Learning",
+        }),
+      })
+      .then((res) => res.json())
+      .then(data => handleAppLaunchResponse(dispatch,data))
+      .catch( (error) => appLaunchFailed(dispatch,error));
+  };
+
+  const handleAppLaunchResponse = (dispatch, data) => {
+    if(data.user){
+      dispatch({
+        type : APP_LAUNCH_SUCCESS,
+        payload: data
+      });
+    }else{
+      appLaunchFailed(dispatch,data.error)
+    }
+  };
+
+  const appLaunchFailed = (dispatch, error) => {
+    dispatch({
+      type : APP_LAUNCH_FAILED,
+      payload: error
+    });
+  };
+
+}

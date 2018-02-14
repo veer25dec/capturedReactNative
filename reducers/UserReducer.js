@@ -13,7 +13,8 @@ const INITIAL_STATE = {
   password: '' ,
   loginResponse: null,
   error: '',
-  isLoading: false
+  isLoading: false,
+  loggedIn: null
 }
 
 
@@ -26,7 +27,7 @@ export default (state = INITIAL_STATE, action) => {
       case LOGIN_USER:
           return { ...state, isLoading : true, error: ''};
       case LOGIN_USER_SUCCESS:
-        return { ...state, loginResponse : action.payload, error: '',isLoading : false, password : ''};
+        return { ...state, loginResponse : action.payload, error: '',isLoading : false, password : '', loggedIn : true};
       case LOGIN_USER_FAILED:
         return { ...state, error : action.payload,isLoading : false};
       default:

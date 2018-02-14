@@ -70,7 +70,9 @@ class LoginScreen extends Component {
         </CardSection>
         {this.renderError()}
         <CardSection withBorder={false}>
+          <Card withBorder={false}/>
           {this.renderButton()}
+          <Card withBorder={false}/>
         </CardSection>
       </BackgroundView>
     )

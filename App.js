@@ -37,6 +37,7 @@ class AppWithNavigationState extends Component {
 const rootReducer = getRootReducer(navReducer);
 
 class App extends Component {
+
   render() {
     const store = createStore(rootReducer, {}, applyMiddleware(ReduxThunk));
     return (

@@ -3,7 +3,7 @@ import { View, Text, ListView, RefreshControl} from 'react-native';
 import { Card, CardSection, Input, Button, Spinner, Header, BackgroundView} from './common';
 import { fetchGroups } from '../actions/GroupsActions'
 import { connect } from 'react-redux';
-import CardListItem from './CardListItem';
+import GroupsListItem from './GroupsListItem';
 
 class Home extends Component {
 
@@ -42,7 +42,7 @@ class Home extends Component {
   }
 
   renderRow(group) {
-		return <CardListItem group={group} />;
+		return <GroupsListItem group={group} />;
 	}
 
 
