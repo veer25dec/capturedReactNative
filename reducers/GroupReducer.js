@@ -8,8 +8,8 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  group: null,
-  resources: [],
+  group: {},
+  resources: {library:[]},
   isLoading: false,
   error: ''
 }

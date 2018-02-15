@@ -41,12 +41,19 @@ class Home extends Component {
     this.props.fetchGroups();
   }
 
+  onGroupPress(group){
+		const navigate = this.props.navigation.navigate;
+		navigate("GroupHome", {groupId: group.id});
+    console.log('onGroupPress  was called')
+	}
+
   renderRow(group) {
-		return <GroupsListItem group={group} />;
+		return <GroupsListItem group={group} onPress={this.onGroupPress.bind(this)}/>;
 	}
 
 
   renderUI(){
+    console.log('renderUI  was called')
 
     if(this.props.error){
       return (
@@ -70,7 +77,9 @@ class Home extends Component {
                   />
                 }
             dataSource={this.state.dataSource}
-            renderRow={this.renderRow}
+            renderRow={(rowData) =>
+                  <GroupsListItem group={rowData} onPress={()=>this.onGroupPress(rowData)}/>
+              }
         />
         </View>
       )

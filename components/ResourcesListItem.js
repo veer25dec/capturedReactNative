@@ -12,21 +12,19 @@ import config from '../util/config';
 import { connect } from 'react-redux';
 import { fetchGroup } from '../actions/GroupActions'
 
-class GroupsListItem extends Component {
+class ResourcesListItem extends Component {
 
 	componentWillUpdate() {
 		LayoutAnimation.spring();
 	}
 
 	render() {
-		console.log('this.props.group    ',this.props.group)
+    console.log('this.props.library.result   ' , this.props.library.result)
 		const { titleStyle, textStyle } = styles;
-		const { username , hero , num_users_all} = this.props.group;
-		const { onPress } = this.props
-		let image_uri = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ hero;
+		const { name, num_pages , thumbnail } = this.props.library.result;
+		let image_uri = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ thumbnail;
 		return (
 				<TouchableOpacity
-					 onPress= { onPress }
 					>
 						<Card withBorder= {true}>
 							<Card>
@@ -36,10 +34,10 @@ class GroupsListItem extends Component {
 		        		/>
 								<CardSection withBorder={false}>
 								<Text style={textStyle}>
-									{num_users_all}
+									{num_pages}
 								</Text>
 								<Text style={textStyle}>
-									{username}
+									{name}
 								</Text>
 								</CardSection>
 							</Card>
@@ -61,11 +59,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-// const mapStateToProps = ({ nav }) => {
-// 	// const {navigation} = nav;
-//   return {};
-// }
-
-// export default connect(mapStateToProps,{ fetchGroup })(GroupsListItem);
-
-export default GroupsListItem;
+export default ResourcesListItem;
