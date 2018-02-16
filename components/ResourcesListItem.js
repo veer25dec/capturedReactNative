@@ -19,27 +19,50 @@ class ResourcesListItem extends Component {
 	}
 
 	render() {
-    console.log('this.props.library.result   ' , this.props.library.result)
 		const { titleStyle, textStyle } = styles;
-		const { name, num_pages , thumbnail } = this.props.library.result;
-		let image_uri = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ thumbnail;
+		const { name , page_thumbs , num_pages } = this.props.library.result;
+		console.log('this.props.library.result   ' , this.props.library)
+		console.log('page_thumbs   ' , page_thumbs)
+
+		let image_uri1;
+		let image_uri2;
+		let image_uri3;
+
+		if(page_thumbs){
+			 image_uri1 = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ page_thumbs[0];
+			 image_uri2 = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ page_thumbs[1];
+			 image_uri3 = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ page_thumbs[2];
+		}
+
 		return (
 				<TouchableOpacity
 					>
 						<Card withBorder= {true}>
-							<Card>
-								<Image
-		          		style={{width: 330, height: 160}}
-		          		source={{uri: image_uri}}
-		        		/>
-								<CardSection withBorder={false}>
-								<Text style={textStyle}>
-									{num_pages}
-								</Text>
-								<Text style={textStyle}>
-									{name}
-								</Text>
+							<Card >
+								<CardSection withBorder= {true}>
+									<Image
+		          			style={{width: 270, height: 200}}
+		          			source={{uri: image_uri1}}
+		        			/>
+									<Card  withBorder= {true}>
+										<Image
+											style={{width: 132, height: 100}}
+											source={{uri: image_uri2}}
+										/>
+										<Image
+											style={{width: 132, height: 100}}
+											source={{uri: image_uri3}}
+										/>
+									</Card>
 								</CardSection>
+								<CardSection>
+									<Text style={textStyle}>
+										{name}
+									</Text>
+								</CardSection>
+									<Text style={textStyle}>
+										{num_pages + ' Cards'}
+									</Text>
 							</Card>
 						</Card>
 				</TouchableOpacity>

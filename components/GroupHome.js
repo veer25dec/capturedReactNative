@@ -49,7 +49,7 @@ class GroupHome extends Component {
       const { titleStyle, textStyle } = styles;
       const { username , hero } = this.props.group;
       const { num_results } = this.props.resources;
-
+      
       let image_uri = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ hero;
 
       return (
