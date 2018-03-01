@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, ListView, RefreshControl, 	StyleSheet, Image , ScrollView} from 'react-native';
-import { Card, CardSection, Input, Button, Spinner, Header, BackgroundView} from './common';
+import { View, Text, ListView, RefreshControl, 	StyleSheet, Image , ScrollView, Dimensions} from 'react-native';
+import { Card, CardSection, Input, Button, Spinner, Header, BackgroundView, ViewV} from './common';
 import { fetchGroup, fetchResources } from '../actions/GroupActions'
 import { connect } from 'react-redux';
 import config from '../util/config';
@@ -49,14 +49,15 @@ class GroupHome extends Component {
       const { titleStyle, textStyle } = styles;
       const { username , hero } = this.props.group;
       const { num_results } = this.props.resources;
-      
+
       let image_uri = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ hero;
+      let deviceWidth = Dimensions.get('window').width;
 
       return (
         <ScrollView>
-          <Card withBorder= {false}>
+          <ViewV>
               <Image
-                style={{width: 330, height: 160}}
+                style={{width: deviceWidth, height: 160}}
                 source={{uri: image_uri}}
               />
               <CardSection withBorder={false}>
@@ -75,7 +76,7 @@ class GroupHome extends Component {
                         <ResourcesListItem library={rowData}/>
                     }
               />
-          </Card>
+          </ViewV>
         </ScrollView>
       );
     }else{
@@ -87,14 +88,19 @@ class GroupHome extends Component {
         </View>
       );
     }
-}
+  }
+
+  onBackPress(){
+    // const navigate = this.props.navigation.navigate;
+    this.props.navigation.goBack(null);
+  }
 
   render() {
     return (
       <View style={{ flex: 1 ,
                     backgroundColor : 'white'
                   }}>
-        <Header headerText={'Hive Learning'} />
+        <Header headerText={'Hive Learning'} goBack={true} onPress={this.onBackPress.bind(this)}/>
         <View style={{ flex: 1 }}>
           {this.renderUI()}
         </View>

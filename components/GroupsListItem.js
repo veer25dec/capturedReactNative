@@ -7,7 +7,7 @@ import {
 	Image,
 	StyleSheet
 	} from 'react-native';
-import { CardSection, Card } from './common';
+import { CardSection, Card , ViewV} from './common';
 import config from '../util/config';
 import { connect } from 'react-redux';
 import { fetchGroup } from '../actions/GroupActions'
@@ -20,7 +20,7 @@ class GroupsListItem extends Component {
 
 	render() {
 		console.log('this.props.group    ',this.props.group)
-		const { titleStyle, textStyle } = styles;
+		const { titleStyle, textStyle , containerStyle } = styles;
 		const { username , hero , num_users_all} = this.props.group;
 		const { onPress } = this.props
 		let image_uri = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ hero;
@@ -29,20 +29,20 @@ class GroupsListItem extends Component {
 					 onPress= { onPress }
 					>
 						<Card withBorder= {true}>
-							<Card>
+							<View style={containerStyle}>
 								<Image
 		          		style={{width: 330, height: 160}}
 		          		source={{uri: image_uri}}
 		        		/>
-								<CardSection withBorder={false}>
+							</View>
+							<CardSection>
 								<Text style={textStyle}>
 									{num_users_all}
 								</Text>
 								<Text style={textStyle}>
 									{username}
 								</Text>
-								</CardSection>
-							</Card>
+							</CardSection>
 						</Card>
 				</TouchableOpacity>
 		);
@@ -58,14 +58,16 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		paddingLeft: 15,
 		fontFamily: 'Helvetica',
+	},
+	containerStyle: {
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'flex-start',
+		alignItems: 'center',
+		borderTopRightRadius:5,
+		borderTopLeftRadius:5,
+		overflow: 'hidden'
 	}
 });
-
-// const mapStateToProps = ({ nav }) => {
-// 	// const {navigation} = nav;
-//   return {};
-// }
-
-// export default connect(mapStateToProps,{ fetchGroup })(GroupsListItem);
 
 export default GroupsListItem;

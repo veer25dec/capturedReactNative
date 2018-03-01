@@ -1,35 +1,72 @@
 
-// Import libraries for making a component
-import React from 'react';
-import { Text, View } from 'react-native';
+import React , { Component } from 'react';
+import { Text, View , TouchableOpacity } from 'react-native';
+import { ViewH } from './';
 
-// Make a component
-const Header = (props) => {
-	const { textStyle, viewStyle } = styles;
-	return (
-		<View style = {viewStyle}>
-			<Text style = {textStyle}>{props.headerText}</Text>
-		</View>
-		);
-};
+class Header extends Component {
+
+	showBackButton(){
+		if(this.props.goBack){
+      return (
+				<View style = {styles.leftContainer}>
+					<TouchableOpacity onPress={this.props.onPress}>
+	          <Text style={{fontSize:15}}>
+	            Back
+	          </Text>
+					</TouchableOpacity>
+					</View>
+      );
+    }else{
+			return (
+				<View style = {styles.leftContainer}/>
+			);
+		}
+	}
+	render() {
+		return (
+				<View style = {styles.navBar}>
+					{this.showBackButton()}
+					<Text style = {styles.textStyle}>{this.props.headerText}</Text>
+					<View style = {styles.rightContainer}/>
+
+				</View>
+			);
+	}
+}
 
 const styles = {
-	viewStyle: {
-		backgroundColor: '#F8F8F8',
-		justifyContent: 'center',
-		alignItems: 'center',
+	textStyle: {
+		fontSize: 20
+	},
+	navBar: {
 		height: 60,
-		paddingTop: 15,
+		backgroundColor: '#F8F8F8',
 		shadowColor: '#000',
 		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.2,
 		elevation: 2,
-		position: 'relative'
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
 	},
-	textStyle: {
-		fontSize: 20
+	leftContainer: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'flex-start',
+		marginLeft:10,
+	},
+	rightContainer: {
+		flex: 1,
+		flexDirection: 'row',
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+		marginRight:10,
+	},
+	rightIcon: {
+		height: 10,
+		width: 10,
+		resizeMode: 'contain',
 	}
 };
 
-// Make the component available to other parts of the app
 export { Header };

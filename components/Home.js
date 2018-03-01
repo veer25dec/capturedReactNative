@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, ListView, RefreshControl} from 'react-native';
-import { Card, CardSection, Input, Button, Spinner, Header, BackgroundView} from './common';
+import { Card, CardSection, Input, Button, Spinner, Header, BackgroundView, ViewV} from './common';
 import { fetchGroups } from '../actions/GroupsActions'
 import { connect } from 'react-redux';
 import GroupsListItem from './GroupsListItem';
@@ -67,21 +67,23 @@ class Home extends Component {
       return <Spinner size='large'/>
     }else if(this.props.teams){
       return (
-        <View style={{ backgroundColor:'white', flex: 1}}>
-        <Text style={{ paddingTop: 20, paddingBottom: 20, paddingLeft: 10, fontSize : 24}}>{this.props.num_teams + ' groups'}</Text>
-        <ListView
-            refreshControl={
-                <RefreshControl
-                  refreshing={this.state.refreshing}
-                  onRefresh={this._onRefresh.bind(this)}
-                  />
+        <ViewV>
+          <CardSection>
+              <Text style={{fontSize : 24}}>{this.props.num_teams + ' groups'}</Text>
+          </CardSection>
+          <ListView
+              refreshControl={
+                  <RefreshControl
+                    refreshing={this.state.refreshing}
+                    onRefresh={this._onRefresh.bind(this)}
+                    />
+                  }
+              dataSource={this.state.dataSource}
+              renderRow={(rowData) =>
+                    <GroupsListItem group={rowData} onPress={()=>this.onGroupPress(rowData)}/>
                 }
-            dataSource={this.state.dataSource}
-            renderRow={(rowData) =>
-                  <GroupsListItem group={rowData} onPress={()=>this.onGroupPress(rowData)}/>
-              }
-        />
-        </View>
+          />
+        </ViewV>
       )
     }else{
       return (
@@ -101,9 +103,7 @@ class Home extends Component {
                     backgroundColor : 'white'
                   }}>
         <Header headerText={'Hive Learning'} />
-        <View style={{ flex: 1 }}>
-          {this.renderUI()}
-        </View>
+        {this.renderUI()}
       </View>
     );
   }

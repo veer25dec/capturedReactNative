@@ -7,7 +7,7 @@ import {
 	Image,
 	StyleSheet
 	} from 'react-native';
-import { CardSection, Card } from './common';
+import { CardSection, Card ,ViewV,ViewH} from './common';
 import config from '../util/config';
 import { connect } from 'react-redux';
 import { fetchGroup } from '../actions/GroupActions'
@@ -19,7 +19,7 @@ class ResourcesListItem extends Component {
 	}
 
 	render() {
-		const { titleStyle, textStyle } = styles;
+		const { titleStyle, textStyle,containerStyle } = styles;
 		const { name , page_thumbs , num_pages } = this.props.library.result;
 		console.log('this.props.library.result   ' , this.props.library)
 		console.log('page_thumbs   ' , page_thumbs)
@@ -38,23 +38,25 @@ class ResourcesListItem extends Component {
 				<TouchableOpacity
 					>
 						<Card withBorder= {true}>
-							<Card >
-								<CardSection withBorder= {true}>
-									<Image
-		          			style={{width: 270, height: 200}}
-		          			source={{uri: image_uri1}}
-		        			/>
-									<Card  withBorder= {true}>
+							<View style={containerStyle}>
+								<ViewH>
+									<View style={styles.containerStyleBTL}>
 										<Image
-											style={{width: 132, height: 100}}
-											source={{uri: image_uri2}}
+											style={{width: 270, height: 200}}
+											source={{uri: image_uri1}}
 										/>
-										<Image
-											style={{width: 132, height: 100}}
-											source={{uri: image_uri3}}
-										/>
-									</Card>
-								</CardSection>
+									</View>
+									<View style={styles.containerStyleBTR}>
+											<Image
+												style={{width: 132, height: 100}}
+												source={{uri: image_uri2}}
+											/>
+											<Image
+												style={{width: 132, height: 100}}
+												source={{uri: image_uri3}}
+											/>
+									</View>
+								</ViewH>
 								<CardSection>
 									<Text style={textStyle}>
 										{name}
@@ -63,7 +65,7 @@ class ResourcesListItem extends Component {
 									<Text style={textStyle}>
 										{num_pages + ' Cards'}
 									</Text>
-							</Card>
+							</View>
 						</Card>
 				</TouchableOpacity>
 		);
@@ -79,7 +81,33 @@ const styles = StyleSheet.create({
 		fontSize: 15,
 		paddingLeft: 15,
 		fontFamily: 'Helvetica',
-	}
+	},
+	containerStyle: {
+			flex: 1,
+			flexDirection: 'column',
+			justifyContent: 'flex-start',
+			alignItems: 'center',
+			borderRadius:5,
+			overflow: 'hidden'
+		},
+	containerStyleBTL: {
+			flex: 2,
+			flexDirection: 'column',
+			justifyContent: 'flex-start',
+			alignItems: 'center',
+			borderTopLeftRadius:5,
+			overflow: 'hidden',
+			marginRight:2,
+		},
+	containerStyleBTR: {
+			flex: 1,
+			flexDirection: 'column',
+			justifyContent: 'flex-start',
+			alignItems: 'center',
+			borderTopRightRadius:5,
+			overflow: 'hidden',
+			marginBottom:2
+		},
 });
 
 export default ResourcesListItem;

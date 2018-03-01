@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Text} from 'react-native';
-import { Card, CardSection, Input, Button, Spinner, BackgroundView} from './common';
+import { Card, CardSection, Input, Button, Spinner, ViewV} from './common';
 import { emailChanged, passwordChanged , loginUser} from '../actions/AuthActions'
 
 class LoginScreen extends Component {
@@ -51,16 +51,16 @@ class LoginScreen extends Component {
 
   render(){
     return(
-      <BackgroundView>
+      <ViewV>
         <Text style={{ paddingTop: 100, paddingBottom: 50, fontSize : 32}}>Sign In</Text>
-        <CardSection withBorder={false}>
+        <CardSection>
           <Input
             placeholder='email@gmail.com'
             onChangeText={ this.onEmailChanged.bind(this)}
             value={this.props.email}
             />
         </CardSection>
-        <CardSection withBorder={false}>
+        <CardSection>
           <Input
             secureTextEntry
             placeholder='password'
@@ -69,12 +69,12 @@ class LoginScreen extends Component {
           />
         </CardSection>
         {this.renderError()}
-        <CardSection withBorder={false}>
-          <Card withBorder={false}/>
+        <CardSection>
+          <Card/>
           {this.renderButton()}
-          <Card withBorder={false}/>
+          <Card/>
         </CardSection>
-      </BackgroundView>
+      </ViewV>
     )
   }
 }
