@@ -10,7 +10,6 @@ import {
 import { CardSection, Card , ViewV} from './common';
 import config from '../util/config';
 import { connect } from 'react-redux';
-import { fetchGroup } from '../actions/GroupActions'
 
 class GroupsListItem extends Component {
 

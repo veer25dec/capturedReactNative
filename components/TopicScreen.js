@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, ListView, RefreshControl, 	StyleSheet, Image , ScrollView, Dimensions} from 'react-native';
 import { Card, CardSection, Input, Button, Spinner, Header, BackgroundView, ViewV} from './common';
-import { fetchGroup, fetchResources } from '../actions/GroupActions'
+import { fetchTopic } from '../actions/TopicActions'
 import { connect } from 'react-redux';
 import config from '../util/config';
-import ResourcesListItem from './ResourcesListItem';
+import CardListItem from './CardListItem';
 
-class GroupHome extends Component {
+class TopicScreen extends Component {
 
   static navigationOptions = {
       title: null,
@@ -17,27 +17,27 @@ class GroupHome extends Component {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(props.library),
+      dataSource: ds.cloneWithRows(props.pages),
     };
   }
 
   componentWillReceiveProps(newProps) {
-    let library = newProps.library;
+    let pages = newProps.pages;
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(library),
+      dataSource: this.state.dataSource.cloneWithRows(pages),
     });
   }
 
   componentWillMount(){
     const groupId = this.props.navigation.state.params.groupId
-    this.props.fetchGroup({groupId});
+    const topicId = this.props.navigation.state.params.topicId
+    this.props.fetchTopic({groupId, topicId});
   }
 
-  onResourcePress(topic){
-    console.log('onResourcePress  was called ', topic)
-    const navigate = this.props.navigation.navigate;
-    const groupId = this.props.navigation.state.params.groupId
-    navigate("TopicScreen", {groupId: groupId, topicId: topic.result.id});
+  onResourcePress(group){
+    // const navigate = this.props.navigation.navigate;
+    // navigate("GroupHome", {groupId: group.id});
+    // console.log('onGroupPress  was called')
   }
 
   onBackPress(){
@@ -55,37 +55,39 @@ class GroupHome extends Component {
       );
     }else if(this.props.isLoading){
       return <Spinner size='large'/>
-    }else if(this.props.group){
+    }else if(this.props.topic){
 
       const { titleStyle, textStyle } = styles;
-      const { username , hero } = this.props.group;
-      const { num_results } = this.props.resources;
+      const { name, num_pages , thumbnail, num_views } = this.props.topic;
 
-      let image_uri = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ hero;
+      let page_thumb = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ thumbnail;
       let deviceWidth = Dimensions.get('window').width;
 
       return (
         <ScrollView>
           <ViewV>
               <Image
-                style={{width: deviceWidth, height: 160}}
-                source={{uri: image_uri}}
+                style={{width: deviceWidth-40, height: 160}}
+                source={{uri: page_thumb}}
               />
               <CardSection withBorder={false}>
                 <Text style={titleStyle}>
-                  {username}
+                  {name}
                 </Text>
               </CardSection>
               <CardSection withBorder={false}>
                 <Text style={textStyle}>
-                  {num_results + ' resources'}
+                  {num_pages + ' Cards'}
+                </Text>
+                <Text style={textStyle}>
+                  {'. ' + num_views + ' Views'}
                 </Text>
               </CardSection>
               <ListView
                   style={{width:deviceWidth-40}}
                   dataSource={this.state.dataSource}
                   renderRow={(rowData) =>
-                        <ResourcesListItem topic={rowData} onPress={()=>this.onResourcePress(rowData)}/>
+                        <CardListItem card={rowData}/>
                     }
               />
           </ViewV>
@@ -95,7 +97,7 @@ class GroupHome extends Component {
       return (
         <View style={{ backgroundColor: 'white' }}>
           <Text style={styles.errorTextStyle}>
-            Failed to load the group
+            Failed to load the topic
           </Text>
         </View>
       );
@@ -103,6 +105,7 @@ class GroupHome extends Component {
   }
 
   render() {
+    console.log("Render was called with props ", this.props)
     return (
       <View style={{ flex: 1 ,
                     backgroundColor : 'white'
@@ -134,12 +137,11 @@ const styles = StyleSheet.create({
 });
 
 mapStateToProps = (state ,props) => ({
-    isLoading: state.group.isLoading,
-    group: state.group.group,
-    resources: state.group.resources,
-    library: state.group.resources.library,
-    error: state.group.error
+    isLoading: state.topic.isLoading,
+    topic: state.topic.topic,
+    pages: state.topic.pages,
+    error: state.topic.error
 })
 
 
-export default connect(mapStateToProps, { fetchGroup } )(GroupHome);
+export default connect(mapStateToProps, { fetchTopic } )(TopicScreen);

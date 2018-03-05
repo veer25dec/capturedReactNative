@@ -10,7 +10,6 @@ import {
 import { CardSection, Card ,ViewV,ViewH} from './common';
 import config from '../util/config';
 import { connect } from 'react-redux';
-import { fetchGroup } from '../actions/GroupActions'
 
 class ResourcesListItem extends Component {
 
@@ -20,23 +19,23 @@ class ResourcesListItem extends Component {
 
 	render() {
 		const { titleStyle, textStyle,containerStyle } = styles;
-		const { name , page_thumbs , num_pages } = this.props.library.result;
-		console.log('this.props.library.result   ' , this.props.library)
+		const { name , page_thumbs , num_pages, thumbnail } = this.props.topic.result;
+		console.log('this.props.library.result   ' , this.props.topic)
 		console.log('page_thumbs   ' , page_thumbs)
+		const { onPress } = this.props
 
 		let image_uri1;
 		let image_uri2;
 		let image_uri3;
 
 		if(page_thumbs){
-			 image_uri1 = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ page_thumbs[0];
-			 image_uri2 = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ page_thumbs[1];
-			 image_uri3 = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ page_thumbs[2];
+			 image_uri1 = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ thumbnail;
+			 image_uri2 = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ page_thumbs[0];
+			 image_uri3 = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ page_thumbs[1];
 		}
 
 		return (
-				<TouchableOpacity
-					>
+				<TouchableOpacity onPress= { onPress }>
 						<Card withBorder= {true}>
 							<View style={containerStyle}>
 								<ViewH>
@@ -48,11 +47,11 @@ class ResourcesListItem extends Component {
 									</View>
 									<View style={styles.containerStyleBTR}>
 											<Image
-												style={{width: 132, height: 100}}
+												style={{width: 132, height: 99}}
 												source={{uri: image_uri2}}
 											/>
 											<Image
-												style={{width: 132, height: 100}}
+												style={{width: 132, height: 99}}
 												source={{uri: image_uri3}}
 											/>
 									</View>
@@ -67,7 +66,7 @@ class ResourcesListItem extends Component {
 									</Text>
 							</View>
 						</Card>
-				</TouchableOpacity>
+			</TouchableOpacity>
 		);
 	}
 }
@@ -88,7 +87,8 @@ const styles = StyleSheet.create({
 			justifyContent: 'flex-start',
 			alignItems: 'center',
 			borderRadius:5,
-			overflow: 'hidden'
+			overflow: 'hidden',
+			backgroundColor: 'white'
 		},
 	containerStyleBTL: {
 			flex: 2,
@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
 			borderTopLeftRadius:5,
 			overflow: 'hidden',
 			marginRight:2,
+			backgroundColor: 'white'
 		},
 	containerStyleBTR: {
 			flex: 1,
@@ -106,7 +107,8 @@ const styles = StyleSheet.create({
 			alignItems: 'center',
 			borderTopRightRadius:5,
 			overflow: 'hidden',
-			marginBottom:2
+			marginBottom:2,
+			backgroundColor: 'white'
 		},
 });
 

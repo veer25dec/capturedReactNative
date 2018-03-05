@@ -16,3 +16,6 @@ export const FETCH_GROUP_FAILED = "fetch_group_failed";
 export const FETCH_RESOURCES = "fetch_resources";
 export const FETCH_RESOURCES_SUCCESS = "fetch_resources_success";
 export const FETCH_RESOURCES_FAILED = "fetch_resources_failed";
+export const FETCH_TOPIC = "fetch_topic";
+export const FETCH_TOPIC_SUCCESS = "fetch_topic_success";
+export const FETCH_TOPIC_FAILED = "fetch_topic_failed";
