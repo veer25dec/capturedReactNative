@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, ListView, RefreshControl} from 'react-native';
+import { Platform, View, ScrollView, Text, StatusBar, SafeAreaView , ListView, RefreshControl } from 'react-native';
 import { Card, CardSection, Input, Button, Spinner, Header, BackgroundView, ViewV} from './common';
 import { fetchGroups } from '../actions/GroupsActions'
 import { connect } from 'react-redux';
 import GroupsListItem from './GroupsListItem';
+import styles, { colors } from './tests/styles/index.style';
 
 class Home extends Component {
 
@@ -17,16 +18,12 @@ class Home extends Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: ds.cloneWithRows(props.teams),
-      refreshing: false,
+      refreshing: false
     };
   }
-
   _onRefresh() {
     this.setState({refreshing: true});
     this.props.fetchGroups() // TODO: should try to change the state with a promise.
-    //.then(() => {
-      //this.setState({refreshing: false});
-    //});;
   }
 
   componentWillReceiveProps(newProps) {
@@ -47,18 +44,14 @@ class Home extends Component {
     console.log('onGroupPress  was called')
 	}
 
-  renderRow(group) {
-		return <GroupsListItem group={group} onPress={this.onGroupPress.bind(this)}/>;
-	}
 
 
   renderUI(){
-    console.log('renderUI  was called')
 
     if(this.props.error){
       return (
         <View style={{ backgroundColor: 'white' }}>
-          <Text style={styles.errorTextStyle}>
+          <Text style={styles.titleDark}>
             {this.props.error}
           </Text>
         </View>
@@ -67,28 +60,30 @@ class Home extends Component {
       return <Spinner size='large'/>
     }else if(this.props.teams){
       return (
-        <ViewV>
-          <CardSection>
-              <Text style={{fontSize : 24}}>{this.props.num_teams + ' groups'}</Text>
-          </CardSection>
-          <ListView
-              refreshControl={
-                  <RefreshControl
-                    refreshing={this.state.refreshing}
-                    onRefresh={this._onRefresh.bind(this)}
-                    />
+          <View style={styles.container}>
+              <StatusBar
+                translucent={true}
+                backgroundColor={'rgba(0, 0, 0, 0.3)'}
+                barStyle={'light-content'}
+              />
+             <ListView
+                  refreshControl={
+                               <RefreshControl
+                                 refreshing={this.state.refreshing}
+                                 onRefresh={this._onRefresh.bind(this)}
+                               />
+                            }
+                    dataSource={this.state.dataSource}
+                    renderRow={(rowData) =>
+                     <GroupsListItem team={rowData} onPress={()=>this.onGroupPress(rowData)}/>
                   }
-              dataSource={this.state.dataSource}
-              renderRow={(rowData) =>
-                    <GroupsListItem group={rowData} onPress={()=>this.onGroupPress(rowData)}/>
-                }
-          />
-        </ViewV>
-      )
+            />
+          </View>
+      );
     }else{
       return (
         <View style={{ backgroundColor: 'white' }}>
-          <Text style={styles.errorTextStyle}>
+          <Text style={styles.titleDark}>
             Failed to load the list of groups
           </Text>
         </View>
@@ -106,14 +101,6 @@ class Home extends Component {
         {this.renderUI()}
       </View>
     );
-  }
-}
-
-const styles = {
-  errorTextStyle: {
-    fontSize: 20,
-    alignSelf: 'center',
-    color: 'red'
   }
 }
 

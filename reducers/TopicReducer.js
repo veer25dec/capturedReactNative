@@ -13,7 +13,6 @@ const INITIAL_STATE = {
 
 
 export default (state = INITIAL_STATE, action) => {
-  console.log('Action in Topic reducer is ' , action);
       switch (action.type) {
       case FETCH_TOPIC:
         return { ...state, isLoading : true, error: ''};

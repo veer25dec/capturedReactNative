@@ -17,12 +17,12 @@ class GroupHome extends Component {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(props.library),
+      dataSource: ds.cloneWithRows(props.resources[this.props.team.id]),
     };
   }
 
   componentWillReceiveProps(newProps) {
-    let library = newProps.library;
+    let library = newProps.resources[this.props.team.id];
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(library),
     });
@@ -135,9 +135,8 @@ const styles = StyleSheet.create({
 
 mapStateToProps = (state ,props) => ({
     isLoading: state.group.isLoading,
-    group: state.group.group,
+    group: state.group.groups[props.navigation.state.params.groupId],
     resources: state.group.resources,
-    library: state.group.resources.library,
     error: state.group.error
 })
 

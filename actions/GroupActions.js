@@ -21,7 +21,7 @@ export const fetchGroup = ({ groupId }) => {
       }})
       .then((res) => res.json())
       .then(data => handleGroupResponse(dispatch,data,groupId))
-      .catch( (error) => fetchGroupsFailed(dispatch,error));
+      .catch( (error) => fetchGroupFailed(dispatch,error));
   };
 };
 
@@ -30,7 +30,7 @@ const handleGroupResponse = (dispatch, data, groupId) => {
   if(data.user){
     dispatch({
       type : FETCH_GROUP_SUCCESS,
-      payload: data.user
+      payload: {data: data.user, groupId:groupId }
     });
     dispatch(fetchResources({groupId}))
   }else{
@@ -40,7 +40,7 @@ const handleGroupResponse = (dispatch, data, groupId) => {
 const fetchGroupFailed = (dispatch, error) => {
   console.log('fetchGroupFailed was called')
   dispatch({
-    type : FETCH_GROUPS_FAILED,
+    type : FETCH_GROUP_FAILED,
     payload: error
   });
 };
@@ -56,16 +56,16 @@ export const fetchResources = ({ groupId }) => {
         'Content-Type': 'application/json',
       }})
       .then((res) => res.json())
-      .then(data => handleResourcesResponse(dispatch,data))
+      .then(data => handleResourcesResponse(dispatch,data,groupId))
       .catch( (error) => fetchResourcesFailed(dispatch,error));
   };
 };
 
-const handleResourcesResponse = (dispatch, data) => {
+const handleResourcesResponse = (dispatch, data, groupId) => {
   if(data.library){
     dispatch({
       type : FETCH_RESOURCES_SUCCESS,
-      payload: data
+      payload: {data: data.library, groupId:groupId }
     });
 
   }else{
