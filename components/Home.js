@@ -40,8 +40,7 @@ class Home extends Component {
 
   onGroupPress(group){
 		const navigate = this.props.navigation.navigate;
-		navigate("GroupHome", {groupId: group.id});
-    console.log('onGroupPress  was called')
+		navigate("GroupHome", {team: group});
 	}
 
 

@@ -46,12 +46,10 @@ export default StyleSheet.create({
     },
     subtitle: {
         marginTop: 5,
-        paddingHorizontal: 30,
+        paddingHorizontal: 45,
         backgroundColor: 'transparent',
-        color: 'rgba(255, 255, 255, 0.75)',
-        fontSize: 13,
-        fontStyle: 'italic',
-        textAlign: 'center'
+        color: colors.gray,
+        fontSize: 13
     },
     slider: {
         marginTop: 15,

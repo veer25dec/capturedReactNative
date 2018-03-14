@@ -91,7 +91,6 @@ export default StyleSheet.create({
         marginTop: 6,
         color: colors.gray,
         fontSize: 12,
-        fontStyle: 'italic'
     },
     subtitleEven: {
         color: 'rgba(255, 255, 255, 0.7)'

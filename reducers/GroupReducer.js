@@ -8,7 +8,7 @@ import {
 } from '../actions/types'
 
 const INITIAL_STATE = {
-  groups: {},
+  group: {},
   resources: {},
   isLoading: false,
   error: ''
@@ -20,7 +20,7 @@ export default (state = INITIAL_STATE, action) => {
       case FETCH_GROUP:
         return { ...state, isLoading : true, error: ''};
       case FETCH_GROUP_SUCCESS:
-        return { ...state , groups : {...state.groups, [action.payload.data.id]: action.payload} };
+        return { ...state , group : action.payload};
       case FETCH_GROUP_FAILED:
           return { ...state, isLoading : false, error : action.payload};
       case FETCH_RESOURCES:

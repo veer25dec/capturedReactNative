@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, ListView, RefreshControl, 	StyleSheet, Image , ScrollView, Dimensions} from 'react-native';
 import { Card, CardSection, Input, Button, Spinner, Header, BackgroundView, ViewV} from './common';
-import { fetchGroup, fetchResources } from '../actions/GroupActions'
+import {fetchResources } from '../actions/GroupActions'
 import { connect } from 'react-redux';
 import config from '../util/config';
 import ResourcesListItem from './ResourcesListItem';
@@ -17,26 +17,25 @@ class GroupHome extends Component {
     super(props);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      dataSource: ds.cloneWithRows(props.resources[this.props.team.id]),
+      dataSource: ds.cloneWithRows(props.resources[this.props.navigation.state.params.team.id]),
     };
   }
 
   componentWillReceiveProps(newProps) {
-    let library = newProps.resources[this.props.team.id];
+    let library = newProps.resources[this.props.navigation.state.params.team.id];
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(library),
     });
   }
 
   componentWillMount(){
-    const groupId = this.props.navigation.state.params.groupId
-    this.props.fetchGroup({groupId});
+    const groupId = this.props.navigation.state.params.team.id
+    this.props.fetchResources({groupId});
   }
 
   onResourcePress(topic){
-    console.log('onResourcePress  was called ', topic)
     const navigate = this.props.navigation.navigate;
-    const groupId = this.props.navigation.state.params.groupId
+    const groupId = this.props.navigation.state.params.team.id
     navigate("TopicScreen", {groupId: groupId, topicId: topic.result.id});
   }
 
@@ -55,10 +54,10 @@ class GroupHome extends Component {
       );
     }else if(this.props.isLoading){
       return <Spinner size='large'/>
-    }else if(this.props.group){
+    }else if(this.props.resources){
 
       const { titleStyle, textStyle } = styles;
-      const { username , hero } = this.props.group;
+      const { username , hero } =  this.props.navigation.state.params.team;
       const { num_results } = this.props.resources;
 
       let image_uri = config.API_BASE_URL + 'api/inbound/thumbnail?w=880&h=440&f='+ hero;
@@ -135,10 +134,9 @@ const styles = StyleSheet.create({
 
 mapStateToProps = (state ,props) => ({
     isLoading: state.group.isLoading,
-    group: state.group.groups[props.navigation.state.params.groupId],
     resources: state.group.resources,
     error: state.group.error
 })
 
 
-export default connect(mapStateToProps, { fetchGroup } )(GroupHome);
+export default connect(mapStateToProps, { fetchResources } )(GroupHome);

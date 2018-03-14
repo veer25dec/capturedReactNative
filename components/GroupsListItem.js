@@ -39,6 +39,7 @@ class GroupsListItem extends Component {
 	}
 
 	onResourcePress(topic){
+		console.log("onResourcePress ****************************" , topic)
 		const navigate = this.props.navigation.navigate;
 		const groupId = this.props.navigation.state.params.groupId
 		navigate("TopicScreen", {groupId: groupId, topicId: topic.result.id});
@@ -65,8 +66,9 @@ class GroupsListItem extends Component {
       return (
           <View style={styles.exampleContainer}>
               <Text style={styles.titleDark}>{this.props.team.username}</Text>
+							<Text style={styles.subtitle}>{this.props.team.num_users} users</Text>
               <Carousel
-								onPress={()=>this.onResourcePress(data)}
+								onPress={()=>this.onResourcePress({res})}
                 ref={c => this._slider1Ref = c}
                 data={res}
                 renderItem={this._renderItemWithParallax}

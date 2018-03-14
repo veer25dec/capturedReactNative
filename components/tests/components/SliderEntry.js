@@ -70,6 +70,7 @@ export default class SliderEntry extends Component {
                 </View>
                 <View style={styles.textContainer}>
                     { uppercaseTitle }
+                    <Text style={styles.subtitle}>{result.num_pages} cards</Text>
                 </View>
             </TouchableOpacity>
         );
