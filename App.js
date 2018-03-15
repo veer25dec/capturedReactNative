@@ -41,6 +41,7 @@ class App extends Component {
 
   render() {
     const store = createStore(rootReducer, {}, applyMiddleware(ReduxThunk));
+    window.store = store;
     return (
       <Provider store={store}>
         <AppWithNavigationState />

@@ -74,7 +74,7 @@ class Home extends Component {
                             }
                     dataSource={this.state.dataSource}
                     renderRow={(rowData) =>
-                     <GroupsListItem team={rowData} onPress={()=>this.onGroupPress(rowData)}/>
+                     <GroupsListItem team={rowData} navigation={this.props.navigation} onPress={()=>this.onGroupPress(rowData)}/>
                   }
             />
           </View>

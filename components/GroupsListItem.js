@@ -39,16 +39,16 @@ class GroupsListItem extends Component {
 	}
 
 	onResourcePress(topic){
-		console.log("onResourcePress ****************************" , topic)
-		const navigate = this.props.navigation.navigate;
-		const groupId = this.props.navigation.state.params.groupId
-		navigate("TopicScreen", {groupId: groupId, topicId: topic.result.id});
+		console.log("onResourcePress ****************************" , this.props)
+		const groupId = this.props.team.id
+		this.props.navigation.navigate("TopicScreen", {groupId: groupId, topicId: topic.result.id});
 	}
 
 	_renderItemWithParallax ({item, index}, parallaxProps) {
       return (
           <SliderEntry
             data={item}
+						onPress={()=>this.onResourcePress(item)}
             even={(index + 1) % 2 === 0}
             parallax={true}
             parallaxProps={parallaxProps}
@@ -68,10 +68,9 @@ class GroupsListItem extends Component {
               <Text style={styles.titleDark}>{this.props.team.username}</Text>
 							<Text style={styles.subtitle}>{this.props.team.num_users} users</Text>
               <Carousel
-								onPress={()=>this.onResourcePress({res})}
                 ref={c => this._slider1Ref = c}
                 data={res}
-                renderItem={this._renderItemWithParallax}
+                renderItem={this._renderItemWithParallax.bind(this)}
                 sliderWidth={sliderWidth}
                 itemWidth={itemWidth}
                 hasParallaxImages={true}
@@ -120,7 +119,6 @@ mapStateToProps = (state ,props) => ({
     groups: state.group.groups,
     resources: state.group.resources,
     error: state.group.error,
-		navigation: state.nav.navigation
 })
 
 
